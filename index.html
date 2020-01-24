@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Snake-JS</title>
+    <style>
+        .snake {
+            background-color: #ffff80;
+            width: 13px;
+            height: 13px;
+            position: absolute;
+            z-index: 100;
+        }
+
+        #board {
+            background-color: #1a1aff;
+            margin: 0 auto;
+            max-width: 600px;
+            height: 600px;
+            position: relative;
+        }
+
+        #dot {
+            background-color: rgb(247, 23, 23);
+            width: 13px;
+            height: 13px;
+            position: absolute;
+        }
+
+        #button {
+            position: absolute;
+            bottom: 50%;
+            left: 42%;
+            font-family: monospace
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="board">
+            <div class="snake-container">
+                <span class="snake"></span>
+                <span class="snake"></span>
+                <span class="snake"></span>
+
+            </div>
+            <!-- <button id="button">Start game</button> -->
+        </div>
+    </div>
+</body>
+
+</html>
