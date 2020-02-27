@@ -1,20 +1,19 @@
-const Board = require('./Board');
+const Unit = require('./Unit');
+const board = document.getElementById('board');
 
-class Dot extends Board {
-  constructor(element) {
+class Dot extends Unit {
+  constructor() {
     super();
-    this.element = element;
+    this.element = this.createNode(board, 'span', ['id', 'dot']);
+    this.setPosition(this.element, {
+      left: Dot.generateRandomMultiple(586, 13),
+      top: Dot.generateRandomMultiple(586, 13)
+    });
   }
 
   static generateRandomMultiple(max, multiple) {
     const random = Math.floor(Math.random() * max);
     return random - (random % multiple);
-  }
-
-  placeDot(max, multiple) {
-    const left = Dot.generateRandomMultiple(max, multiple);
-    const top = Dot.generateRandomMultiple(max, multiple);
-    this.setPosition(this.element, { left, top });
   }
 }
 
