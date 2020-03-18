@@ -2,7 +2,7 @@ class Unit {
   constructor(element, position) {
     this.element = element;
     this.position = position;
-    if (this.constructor.name === 'Dot') {
+    if (this.element.getAttribute('id') === 'dot') {
       Unit.dotReference = this;
     }
   }
