@@ -2,8 +2,8 @@ const Snake = require('./Snake');
 const Dot = require('./Dot');
 
 const startGame = () => {
-  const snake = new Snake(document.querySelector('.snake-container'));
-  new Dot();
+  const snake = new Snake(document.querySelector('.snake-container'), {});
+  new Dot(document.getElementById('dot'), {});
   window.addEventListener('keydown', e => {
     if (e.keyCode === 37) snake.moveHead('left', 'left', (p, s) => p - s);
     if (e.keyCode === 38) snake.moveHead('top', 'top', (p, s) => p - s);

@@ -1,12 +1,11 @@
 const Unit = require('./Unit');
 
 class Snake extends Unit {
-  constructor(element) {
-    super();
-    this.element = element;
+  constructor(element, position) {
+    super(element, position);
+    this.head = element.lastChild.previousSibling;
     this.timer = null;
     this.key = null;
-    this.head = this.element.lastChild.previousSibling;
   }
 
   getPreviousNode(node) {
@@ -15,6 +14,10 @@ class Snake extends Unit {
 
   directionChange() {
     window.clearInterval(this.timer);
+  }
+
+  growSnake() {
+    this.createNode(this.element, 'span', ['class', 'snake']);
   }
 
   alignNodes(node, position) {
@@ -38,6 +41,8 @@ class Snake extends Unit {
       [direction]: calcPosition(headPosition[direction], 13)
     };
     this.setPosition(this.head, newPosition);
+    this.savePosition(this.head);
+    this.checkUnitCollision();
     this.alignNodes(this.head, headPosition);
       }, 70);
     }

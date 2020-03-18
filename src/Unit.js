@@ -1,9 +1,18 @@
 class Unit {
-  createNode(parent, type, attribues) {
-    const domNode = document.createElement(type);
-    domNode.setAttribute(...attribues);
-    parent.appendChild(domNode);
-    return domNode;
+  constructor(element, position) {
+    this.element = element;
+    this.position = position;
+    if (this.constructor.name === 'Dot') {
+      Unit.dotReference = this;
+    }
+  }
+
+  checkUnitCollision() {
+    const didCollide = Unit.dot.left === Unit.head.left && Unit.dot.top === Unit.head.top;
+    if (didCollide) {
+      Unit.dotReference.setRandomPosition(Unit.dotReference.element);
+      this.growSnake();
+    }
   }
 
   getPosition(node) {
@@ -16,6 +25,19 @@ class Unit {
     const { left, top } = position;
     node.style.top = `${top}px`;
     node.style.left = `${left}px`;
+  }
+
+  savePosition(node) {
+    this.position = this.getPosition(node);
+    Unit[node.getAttribute('id')] = this.position;
+  }
+
+  createNode(parent, type, attribues) {
+    const domNode = document.createElement(type);
+    const textNode = document.createTextNode('');
+    domNode.setAttribute(...attribues);
+    parent.prepend(domNode);
+    parent.prepend(textNode);
   }
 }
 
