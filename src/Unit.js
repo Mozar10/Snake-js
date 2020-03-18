@@ -7,6 +7,20 @@ class Unit {
     }
   }
 
+  checkBorderCollision() {
+    console.log(this.position);
+    const didCollide =
+      this.position.top < 0 ||
+      this.position.left < 0 ||
+      this.position.top > 586 ||
+      this.position.left > 586;
+    if (didCollide) {
+      this.directionChange();
+      alert('YOU LOSE');
+      window.location.reload();
+    }
+  }
+
   checkUnitCollision() {
     const didCollide = Unit.dot.left === Unit.head.left && Unit.dot.top === Unit.head.top;
     if (didCollide) {

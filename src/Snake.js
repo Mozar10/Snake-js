@@ -43,6 +43,8 @@ class Snake extends Unit {
     this.setPosition(this.head, newPosition);
     this.savePosition(this.head);
     this.checkUnitCollision();
+    this.checkBorderCollision();
+    // this.checkSelfCollision();
     this.alignNodes(this.head, headPosition);
       }, 70);
     }
