@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack -p",
+    "deploy": "cd dist/ && surge --domain abaft-toothbrush.surge.sh",
     "lint": "./node_modules/.bin/eslint --fix src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

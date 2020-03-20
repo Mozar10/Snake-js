@@ -39,7 +39,7 @@ class Snake extends Unit {
   }
 
   //TODO Needs refactoring to more readable functional units.
-  moveHead(direction, arrowKey, calcPosition) {
+  moveHead(direction, arrowKey, calcPosition, speed) {
     if (this.checkDirection(arrowKey)) {
       this.arrowKey = arrowKey;
       this.directionChange();
@@ -55,7 +55,7 @@ class Snake extends Unit {
         this.checkBorderCollision();
         // this.checkSelfCollision();
         this.alignNodes(this.head, headPosition);
-      }, 70);
+      }, speed);
     }
   }
 }
