@@ -5,7 +5,9 @@ class Snake extends Unit {
     super(element, position);
     this.head = element.lastChild.previousSibling;
     this.timer = null;
-    this.key = null;
+    this.arrowKey = null;
+    this.verticalDirections = ['top', 'bottom'];
+    this.horizontalDirections = ['left', 'right'];
   }
 
   getPreviousNode(node) {
@@ -28,24 +30,31 @@ class Snake extends Unit {
       this.alignNodes(previousNode, current);
     }
   }
+
+  checkDirection(arrowKey) {
+    const incomingDirection = this.verticalDirections.includes(arrowKey)
+      ? this.verticalDirections
+      : this.horizontalDirections;
+    return !incomingDirection.includes(this.arrowKey);
+  }
+
   //TODO Needs refactoring to more readable functional units.
-  moveHead(direction, key, calcPosition) {
-    // if they key you pressed is not the same as whay you just pressed
-    if (this.key !== key) {
-      this.key = key;
+  moveHead(direction, arrowKey, calcPosition) {
+    if (this.checkDirection(arrowKey)) {
+      this.arrowKey = arrowKey;
       this.directionChange();
       this.timer = window.setInterval(() => {
-    const headPosition = this.getPosition(this.head);
-    const newPosition = {
-      ...headPosition,
-      [direction]: calcPosition(headPosition[direction], 13)
-    };
-    this.setPosition(this.head, newPosition);
-    this.savePosition(this.head);
-    this.checkUnitCollision();
-    this.checkBorderCollision();
-    // this.checkSelfCollision();
-    this.alignNodes(this.head, headPosition);
+        const headPosition = this.getPosition(this.head);
+        const newPosition = {
+          ...headPosition,
+          [direction]: calcPosition(headPosition[direction], 13)
+        };
+        this.setPosition(this.head, newPosition);
+        this.savePosition(this.head);
+        this.checkUnitCollision();
+        this.checkBorderCollision();
+        // this.checkSelfCollision();
+        this.alignNodes(this.head, headPosition);
       }, 70);
     }
   }

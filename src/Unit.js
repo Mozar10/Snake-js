@@ -8,7 +8,6 @@ class Unit {
   }
 
   checkBorderCollision() {
-    console.log(this.position);
     const didCollide =
       this.position.top < 0 ||
       this.position.left < 0 ||
