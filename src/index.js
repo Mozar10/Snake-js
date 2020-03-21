@@ -2,7 +2,7 @@ const Snake = require('./Snake');
 const Dot = require('./Dot');
 
 const startGame = () => {
-  const SPEED = 50;
+  const SPEED = 60;
   const snake = new Snake(document.querySelector('.snake-container'), {});
   new Dot(document.getElementById('dot'), {});
   window.addEventListener('keydown', e => {
