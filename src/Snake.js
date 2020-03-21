@@ -39,28 +39,29 @@ class Snake extends Unit {
     return !incomingDirection.includes(this.arrowKey);
   }
 
-  setNewTimer() {}
+  setNewTimer(direction, calcPosition, speed) {
+    this.timer = window.setInterval(() => {
+      const headPosition = this.getPosition(this.head);
+      const newPosition = {
+        ...headPosition,
+        [direction]: calcPosition(headPosition[direction], 13)
+      };
+      this.setPosition(this.head, newPosition);
+      this.savePosition(this.head);
+      this.checkUnitCollision();
+      this.checkBorderCollision();
+      // this.checkSelfCollision();
+      this.previouslySetPosition = true;
+      this.alignNodes(this.head, headPosition);
+    }, speed);
+  }
 
-  //TODO Needs refactoring to more readable functional units.
   moveHead(direction, arrowKey, calcPosition, speed) {
     if (this.checkDirection(arrowKey) && this.previouslySetPosition) {
       this.previouslySetPosition = false;
       this.arrowKey = arrowKey;
       this.directionChange();
-      this.timer = window.setInterval(() => {
-        const headPosition = this.getPosition(this.head);
-        const newPosition = {
-          ...headPosition,
-          [direction]: calcPosition(headPosition[direction], 13)
-        };
-        this.setPosition(this.head, newPosition);
-        this.savePosition(this.head);
-        this.checkUnitCollision();
-        this.checkBorderCollision();
-        // this.checkSelfCollision();
-        this.previouslySetPosition = true;
-        this.alignNodes(this.head, headPosition);
-      }, speed);
+      this.setNewTimer(direction, calcPosition, speed);
     }
   }
 }
