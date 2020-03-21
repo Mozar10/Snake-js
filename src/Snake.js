@@ -6,6 +6,7 @@ class Snake extends Unit {
     this.head = element.lastChild.previousSibling;
     this.timer = null;
     this.arrowKey = null;
+    this.previouslySetPosition = true;
     this.verticalDirections = ['top', 'bottom'];
     this.horizontalDirections = ['left', 'right'];
   }
@@ -38,9 +39,12 @@ class Snake extends Unit {
     return !incomingDirection.includes(this.arrowKey);
   }
 
+  setNewTimer() {}
+
   //TODO Needs refactoring to more readable functional units.
   moveHead(direction, arrowKey, calcPosition, speed) {
-    if (this.checkDirection(arrowKey)) {
+    if (this.checkDirection(arrowKey) && this.previouslySetPosition) {
+      this.previouslySetPosition = false;
       this.arrowKey = arrowKey;
       this.directionChange();
       this.timer = window.setInterval(() => {
@@ -54,6 +58,7 @@ class Snake extends Unit {
         this.checkUnitCollision();
         this.checkBorderCollision();
         // this.checkSelfCollision();
+        this.previouslySetPosition = true;
         this.alignNodes(this.head, headPosition);
       }, speed);
     }
