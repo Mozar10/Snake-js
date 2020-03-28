@@ -13,11 +13,7 @@ class Unit {
       this.position.left < 0 ||
       this.position.top > 586 ||
       this.position.left > 586;
-    if (didCollide) {
-      this.directionChange();
-      alert('YOU LOSE');
-      window.location.reload();
-    }
+    if (didCollide) this.endGame();
   }
 
   checkUnitCollision() {
@@ -51,6 +47,12 @@ class Unit {
     domNode.setAttribute(...attribues);
     parent.prepend(domNode);
     parent.prepend(textNode);
+  }
+
+  endGame() {
+    this.directionChange();
+    alert('YOU LOSE');
+    window.location.reload();
   }
 }
 

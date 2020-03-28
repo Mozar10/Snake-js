@@ -4,6 +4,7 @@ class Snake extends Unit {
   constructor(element, position) {
     super(element, position);
     this.head = element.lastChild.previousSibling;
+    this.body = [];
     this.timer = null;
     this.arrowKey = null;
     this.previouslySetPosition = true;
@@ -24,12 +25,23 @@ class Snake extends Unit {
   }
 
   alignNodes(node, position) {
+    this.body = [];
     const previousNode = this.getPreviousNode(node);
     if (previousNode) {
       const current = this.getPosition(previousNode);
       this.setPosition(previousNode, position);
+      this.body.push(position);
+      this.checkSelfCollision();
       this.alignNodes(previousNode, current);
     }
+  }
+
+  checkSelfCollision() {
+    const headPosition = this.getPosition(this.head);
+    this.body.forEach(position => {
+      console.log(position);
+      if (headPosition.top === position.top && headPosition.left === position.left) this.endGame();
+    });
   }
 
   checkDirection(arrowKey) {
@@ -50,7 +62,6 @@ class Snake extends Unit {
       this.savePosition(this.head);
       this.checkUnitCollision();
       this.checkBorderCollision();
-      // this.checkSelfCollision();
       this.previouslySetPosition = true;
       this.alignNodes(this.head, headPosition);
     }, speed);
