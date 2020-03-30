@@ -39,7 +39,6 @@ class Snake extends Unit {
   checkSelfCollision() {
     const headPosition = this.getPosition(this.head);
     this.body.forEach(position => {
-      console.log(position);
       if (headPosition.top === position.top && headPosition.left === position.left) this.endGame();
     });
   }
