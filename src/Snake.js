@@ -1,9 +1,7 @@
 const Unit = require('./Unit');
-
 class Snake extends Unit {
   constructor(element, position) {
     super(element, position);
-    this.head = element.lastChild.previousSibling;
     this.body = [];
     this.timer = null;
     this.arrowKey = null;
@@ -21,25 +19,24 @@ class Snake extends Unit {
   }
 
   growSnake() {
-    this.createNode(this.element, 'span', ['class', 'snake']);
+    this.createNode(this.element.parentNode, 'span', ['class', 'snake']);
   }
 
   alignNodes(node, position) {
     this.body = [];
     const previousNode = this.getPreviousNode(node);
     if (previousNode) {
-      const current = this.getPosition(previousNode);
-      this.setPosition(previousNode, position);
+      const current = this.getDomPosition(previousNode);
+      this.setDomPosition(previousNode, position);
       this.body.push(position);
-      this.checkSelfCollision();
       this.alignNodes(previousNode, current);
     }
   }
 
   checkSelfCollision() {
-    const headPosition = this.getPosition(this.head);
     this.body.forEach(position => {
-      if (headPosition.top === position.top && headPosition.left === position.left) this.endGame();
+      if (this.position.top === position.top && this.position.left === position.left)
+        this.endGame();
     });
   }
 
@@ -52,17 +49,17 @@ class Snake extends Unit {
 
   setNewTimer(direction, calcPosition, speed) {
     this.timer = window.setInterval(() => {
-      const headPosition = this.getPosition(this.head);
+      const headPosition = this.position;
       const newPosition = {
-        ...headPosition,
-        [direction]: calcPosition(headPosition[direction], 13)
+        ...this.position,
+        [direction]: calcPosition(this.position[direction], 13)
       };
-      this.setPosition(this.head, newPosition);
-      this.savePosition(this.head);
+      this.updatePosition(this.element, newPosition);
+      this.previouslySetPosition = true;
       this.checkUnitCollision();
       this.checkBorderCollision();
-      this.previouslySetPosition = true;
-      this.alignNodes(this.head, headPosition);
+      // this.checkSelfCollision();
+      this.alignNodes(this.element, headPosition);
     }, speed);
   }
 

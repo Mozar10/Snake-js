@@ -3,8 +3,7 @@ const Unit = require('./Unit');
 class Dot extends Unit {
   constructor(element, position) {
     super(element, position);
-    this.setRandomPosition(element);
-    this.savePosition(element);
+    this.updatePosition(element, this.getRandomPosition());
   }
 
   static generateRandomMultiple(max, multiple) {
@@ -12,12 +11,11 @@ class Dot extends Unit {
     return random - (random % multiple);
   }
 
-  setRandomPosition(element) {
-    this.setPosition(element, {
+  getRandomPosition() {
+    return {
       left: Dot.generateRandomMultiple(586, 13),
       top: Dot.generateRandomMultiple(586, 13)
-    });
-    this.savePosition(element);
+    };
   }
 }
 
