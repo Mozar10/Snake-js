@@ -2,8 +2,8 @@ const Unit = require('./Unit');
 class Snake extends Unit {
   constructor(element, position) {
     super(element, position);
-    this.body = [];
     this.timer = null;
+    this.bodyPositions = [];
     this.arrowKey = null;
     this.previouslySetPosition = true;
     this.verticalDirections = ['top', 'bottom'];
@@ -23,18 +23,20 @@ class Snake extends Unit {
   }
 
   alignNodes(node, position) {
-    this.body = [];
+    this.bodyPositions = [];
     const previousNode = this.getPreviousNode(node);
     if (previousNode) {
       const current = this.getDomPosition(previousNode);
       this.setDomPosition(previousNode, position);
-      this.body.push(position);
+      this.bodyPositions.push(position);
+      this.checkSelfCollision();
       this.alignNodes(previousNode, current);
     }
   }
 
   checkSelfCollision() {
-    this.body.forEach(position => {
+    this.bodyPositions.forEach(position => {
+      console.log(position);
       if (this.position.top === position.top && this.position.left === position.left)
         this.endGame();
     });
@@ -49,17 +51,16 @@ class Snake extends Unit {
 
   setNewTimer(direction, calcPosition, speed) {
     this.timer = window.setInterval(() => {
-      const headPosition = this.position;
-      const newPosition = {
-        ...this.position,
-        [direction]: calcPosition(this.position[direction], 13)
-      };
-      this.updatePosition(this.element, newPosition);
-      this.previouslySetPosition = true;
-      this.checkUnitCollision();
-      this.checkBorderCollision();
-      // this.checkSelfCollision();
-      this.alignNodes(this.element, headPosition);
+    const headPosition = this.position;
+    const newPosition = {
+      ...this.position,
+      [direction]: calcPosition(this.position[direction], 13)
+    };
+    this.updatePosition(this.element, newPosition);
+    this.previouslySetPosition = true;
+    this.checkUnitCollision();
+    this.checkBorderCollision();
+    this.alignNodes(this.element, headPosition);
     }, speed);
   }
 
