@@ -13,7 +13,6 @@ class Game {
       if (e.keyCode === 39) this.snake.moveHead('left', 'right', (p, s) => p + s, level);
       if (e.keyCode === 40) this.snake.moveHead('top', 'bottom', (p, s) => p + s, level);
     });
-    //Why does this work but this.checkUnitCollision = this.checkUnitCollision.bind(this) doesnt!!
     Game.prototype.checkUnitCollision = Game.prototype.checkUnitCollision.bind(this);
   }
 
